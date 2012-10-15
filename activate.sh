@@ -148,7 +148,7 @@ use_env() {
       echo -n "Create virtualenv \"$venv\" now? (Yn) "
       read answer
       if [[ "$answer" == "y" ]]; then
-        mkvirtualenv --distribute "$venv"
+        mkvirtualenv "$venv"
       fi
     fi
   fi
