@@ -20,7 +20,7 @@ autoenv_init()
       if [[ -e "${_file}" ]]
       then echo "${_file}"
       fi
-      builtin cd ..
+      builtin cd .. &>/dev/null
     done
   ) )
 
@@ -128,28 +128,4 @@ cd() {
   autoenv_cd "$@"
 }
 
-
-# The use_env call below is a reusable command to activate/create a new Python
-# virtualenv, requiring only a single declarative line of code in your .env files.
-# It only performs an action if the requested virtualenv is not the current one.
-use_env() {
-  typeset venv
-
-  if [[ "$#" -ne 1 ]]; then
-      echo "error: Please provide an argument to use_env." >&2
-      return 2
-  fi
-
-  venv="$1"
-  if [[ "${VIRTUAL_ENV:t}" != "$venv" ]]; then
-    if workon | grep -q "$venv"; then
-      workon "$venv"
-    else
-      echo -n "Create virtualenv \"$venv\" now? (Yn) "
-      read answer
-      if [[ "$answer" == "y" ]]; then
-        mkvirtualenv "$venv"
-      fi
-    fi
-  fi
-}
+cd .
